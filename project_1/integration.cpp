@@ -1,7 +1,7 @@
-#include <cstdlib>
-#include <iostream>
 #include <cmath>
+#include <cstdlib>
 #include <iomanip>
+#include <iostream>
 
 using namespace std;
 
@@ -41,13 +41,14 @@ int main()
     step_size = (upper_limit - lower_limit) / step_count;
     cout << "Step size : " << step_size << endl << endl;
 
-    cout << fixed << setw(10) << left << "   a";
-    cout << fixed << setw(10) << left << "   b";
-    cout << fixed << setw(10) << left << "  f(a)";
-    cout << fixed << setw(10) << left << "f(2a+b/3)";
-    cout << fixed << setw(10) << left << "f(a+2b/3)";
-    cout << fixed << setw(10) << left << "  f(b)";
-    cout << " value"<< endl;
+    cout << fixed << setw(12) << left << "   a";
+    cout << fixed << setw(12) << left << "   b";
+    cout << fixed << setw(12) << left << "  f(a)";
+    cout << fixed << setw(12) << left << "f(2a+b/3)";
+    cout << fixed << setw(12) << left << "f(a+2b/3)";
+    cout << fixed << setw(12) << left << "  f(b)";
+    cout << " value" << endl;
+    cout << string(84, '-') << endl;
 
     for (int i=0; i < step_count; i++)
     {
@@ -62,12 +63,12 @@ int main()
 
         double interval_area = (b - a) / 8 * (f_a + 3 * f_2a_b_3 + 3 * f_a_2b_3 + f_b);
 
-        cout << fixed << setw(10) << left << setprecision(5) << a;
-        cout << fixed << setw(10) << left << setprecision(5) << b;
-        cout << fixed << setw(10) << left << setprecision(5) << f_a;
-        cout << fixed << setw(10) << left << setprecision(5) << f_2a_b_3;
-        cout << fixed << setw(10) << left << setprecision(5) << f_a_2b_3;
-        cout << fixed << setw(10) << left << setprecision(5) << f_b;
+        cout << fixed << setw(12) << left << setprecision(5) << a;
+        cout << fixed << setw(12) << left << setprecision(5) << b;
+        cout << fixed << setw(12) << left << setprecision(5) << f_a;
+        cout << fixed << setw(12) << left << setprecision(5) << f_2a_b_3;
+        cout << fixed << setw(12) << left << setprecision(5) << f_a_2b_3;
+        cout << fixed << setw(12) << left << setprecision(5) << f_b;
         cout << setprecision(5) << interval_area << endl;
 
         integral += interval_area;
