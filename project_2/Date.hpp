@@ -1,18 +1,21 @@
+#ifndef DATE_H
+#define DATE_H
 #include <string>
+#include <map>
 
 class Date
 {
-private:
+public:
     int year;
     int month;
     int day;
- 
-public:
-    Date(int year, int month, int day);
- 
-    int getYear() { return year; }
-    int getMonth() { return month; }
-    int getDay()  { return day; }
+    static std::map<std::string, int> months;
 
-    static Date parseDate(std::string input);
+    Date();
+    Date(std::string dateString);
+
+    static int parseMonth(std::string monthName);
+    std::string toString();
 };
+
+#endif

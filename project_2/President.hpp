@@ -1,22 +1,21 @@
+#ifndef PRESIDENT_H
+#define PRESIDENT_H
+
 #include <string>
 #include "Date.hpp"
 
 class President {
 
-private:
+public:
     std::string firstName;
     std::string middleName;
     std::string lastName;
-    Date termStart;
-    Date termEnd;
+    std::string party;
+    std::string state;
+    Date* termStart;
+    Date* termEnd;
 
-public:
-    President(string firstName, string middleName, string lastName,
-              Date termStart, Date termEnd);
-    std::string getFirstName();
-    std::string getMiddleName();
-    std::string getLastName();
-    Date getTermStart();
-    Date getTermEnd();
-    
-}
+    std::string toString();
+};
+
+#endif
