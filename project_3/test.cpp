@@ -1,32 +1,72 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include "BSTree.h"
+#include "BSTree.cpp"
 using namespace std;
 
 int main(int argCount, char *argValues[]) {
-	/*
-	 * See if MovieNode constructs and compares items correctly.
-	 */
-	BSTree::MovieNode item1, item2("Animal House", 1980, "PG-13", 90),
-		item3("Animal House", 1980, "", 1000, "http://nowhere.com/animalhouse.mov");
+    BSTree tree;
+	tree.readFromFile("movies.txt");
 
-	if (item1 == item2) {
-		cout << "The items are equal" << endl;
-	}
-	if (item3 == item2) {
-		cout << "The items are equal" << endl;
-	}
+	while (true)
+    {
+        cout << "Command: ";
+		string input;
+		cin >> input;
+		char command = input.at(0);
 
-	/*
-	 * Create a binary search tree -- checking insert function in BSTree...
-	 */
-	BSTree firstTree;
-	firstTree.insert("Animal House", 1980, "PG-13", 90);
-	firstTree.insert("Batman", 1990, "PG-13", 98);
-	firstTree.insert("Catch 22", 1960, "PG");
-	firstTree.insert("Amelie", 1993);
-	firstTree.insert("Act 2", 1999);
-	firstTree.insert("Ants", 1000);
+		string title, rating, url;
+		int year, runningTime;
+
+        switch (command)
+        {			
+            case 'L': {
+				tree.list();
+				break;
+			}
+            case 'I': {
+                cout << "Enter title : ";
+                cin >> title;
+                cout << "Enter year: ";
+                cin >> year;
+                cout << "Enter Rating : ";
+                cin >> rating;
+                cout << "Enter length : ";
+                cin >> runningTime;
+                cout << "Enter URL: ";
+                cin >> url;
+				
+				tree.insert(title, year, rating, runningTime, url);
+				break;
+			}
+            case 'S': {
+                cout << "Enter title : ";
+                cin >> title;
+                cout << "Enter year: ";
+                cin >> year;
+
+                BSTree::MovieNode* result = tree.search(title, year);
+
+				if (result == nullptr)
+					cout << "Movie not found.";
+				break;
+			}
+            case 'D': {
+                cout << "Enter title : ";
+                cin >> title;
+                cout << "Enter year: ";
+                cin >> year;
+
+				tree.remove(title, year);
+				break;
+			}
+            case 'Q': {
+				tree.writeToFile("movies.txt");
+				return EXIT_SUCCESS;
+			}
+            default:
+                cout << "Invalid command." << endl;
+        }
+    }
 	return EXIT_SUCCESS;
 }

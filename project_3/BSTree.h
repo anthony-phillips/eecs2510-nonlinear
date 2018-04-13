@@ -71,6 +71,50 @@ public:
 		void setRight(MovieNode *ptr) { right = ptr; }
 		void setLeft(MovieNode *ptr) { left = ptr; }
 		void setParent(MovieNode *ptr) { parent = ptr; }
+
+		string toString() {
+			string output = "";
+
+			output += title + '\n';
+			output += year + '\n';
+			output += rating + '\n';
+			output += runningTime + '\n';
+			output += url + '\n';
+
+			return output;
+		}
+
+		MovieNode* search(string title, int year) {
+			if (this->title == title && this->year == year)
+				return this;
+			else if (this->title > title) {
+				if (left == nullptr)
+					return nullptr;
+				return left->search(title, year);
+			}
+			else if (this->title < title) {
+				if (right == nullptr)
+					return nullptr;
+				return right->search(title, year);
+			}
+			return nullptr;
+		}
+
+		void list()
+		{
+			// Recursively traverse the left side of the branch
+			if (left == nullptr)
+				return;
+			left->list();
+			
+			// Output
+			cout << toString();
+			
+			// Recursively traverse the right side of the branch
+			if (this->right == nullptr)
+				return;
+			right->list();
+		}
 	};
 private:
 protected:
@@ -83,9 +127,7 @@ public:
 			root = nullptr;
 		}
 	}
-	void insert(string title, int year, string rating = "", int runningTime = 0, string url = "") {
-		
-	}
+	void insert(string title, int year, string rating = "", int runningTime = 0, string url = "");
 	void remove(string title, int year);
 	void readFromFile(string filename);
 	void writeToFile(string filename);
@@ -93,6 +135,5 @@ public:
 	void list();
 
 };
-
 
 #endif

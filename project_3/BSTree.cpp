@@ -1,10 +1,12 @@
-#include "BStree.h"
+#include "BSTree.h"
+#include <iostream>
+using namespace std;
 
 BSTree::MovieNode::MovieNode(string title, int year, string rating,
 	int runningTime, string url,
 	MovieNode * left, MovieNode * right,
-	MovieNode *parent){
-
+	MovieNode *parent)
+{
 	this->title = title;
 	this->year = year;
 	this->rating = rating;
@@ -19,25 +21,21 @@ BSTree::MovieNode::MovieNode(string title, int year, string rating,
  * Iterative method to insert a new movie into the binary search tree.  The routine
  * is responsible for allocating the node and inserting in place in the tree. 
  */
-void BSTree::insert(string title, int year, string rating, int runningTime, string url) {
-	/*
-	 * Create the Movie Node
-	 */
-	MovieNode *newMovie = new MovieNode(title, year, rating, runningTime, url);
-	/*
-	 * Insert it at the root if the tree is empty.
-	 */
-	MovieNode *current;
-	if (root == nullptr) { // Tree is empty -- insert the node
+void BSTree::insert(string title, int year, string rating, int runningTime, string url) 
+{
+	MovieNode* newMovie = new MovieNode(title, year, rating, runningTime, url);
+	
+	cout << "PARSED:" << endl << newMovie->toString();
+
+	// If tree is empty insert the node
+	if (root == nullptr) {
+		cout << "NULLPTR";
 		root = newMovie;
 		return;
 	}
-	/*
-	 * If the tree is not empty then set current to the root and find the spot
-	 * to insert the node by comparing the current node with the node to be 
-	 * inserted.  When the spot is found insert the node and return.
-	 */
-	current = root;
+
+	// If the tree is not empty then find the insertion point, insert, and return
+	MovieNode* current = root;
 	do {
 		if (*newMovie < *current) {  // add to left
 			if (current->getLeft() == nullptr) {
@@ -62,45 +60,74 @@ void BSTree::insert(string title, int year, string rating, int runningTime, stri
 		}
 	} while (true);
 }
-/*
- * Method to remove a node from the BSTree. 
- */
+
+// Remove a matching node from the tree
 void BSTree::remove(string title, int year)
 {
-	throw exception("remove not yet implemented");
+	throw exception();
 }
-/*
- * method to read the contents of a file (filename) and 
- * to build a tree. 
- */
+// Read the contents of a file to build the tree
 void BSTree::readFromFile(string filename)
 {
-	throw exception("readFromFile method not yet implemented");
+    ifstream inFile;
+    inFile.open(filename);
+
+    int lineCount = 0;
+    string line;
+
+	string title, rating, url;
+	int year, runningTime;
+
+	while (getline(inFile, line))
+	{
+		cout << "LINE " + to_string(lineCount) + ": " + line << endl;
+		switch (lineCount)
+		{
+			case 0: {
+				title = line;
+				year = 0;
+				rating = "";
+				runningTime = 0;
+				url = "";
+				break;
+			}
+			case 1: {
+				year = stoi(line);
+				break;
+			}
+			case 2: {
+				rating = line;
+				break;
+			}
+			case 3: {
+				runningTime = stoi(line);
+				break;
+			}
+			case 4: {
+				url = line;
+				cout << title + ", " + to_string(year) + ", " + rating + ", " + to_string(runningTime) + ", " + url << endl;
+				insert(title, year, rating, runningTime, url);
+				lineCount = -1;
+				break;
+			}
+		}
+		lineCount++;
+	}
 }
 
-/*
- * write the contents of the tree out the the file given
- * as the filename.  
- */
+// Write the contents of the tree to a file
 void BSTree::writeToFile(string filename)
 {
-	throw exception("writeToFile method not yet implemented");
+	throw exception();
 }
-/*
- * This method searches the tree for a matching movie.  If it
- * finds the movie it returns a pointer to the movie.  Otherwise
- * it returns a null pointer.
- */
+
+// Return a pointer to the searched movie node or a null pointer if not found
 BSTree::MovieNode* BSTree::search(string title, int year)
 {
-	throw exception("search method not yet implemented");
-	return nullptr;
+	return root->search(title, year);
 }
-/*
- * Method to list all the items in the tree using an inorder 
- * traversal.
- */
-void BSTree::list()
-{
-	throw exception("list method not yet implemented");
+
+// List all the items in the tree using inorder traversal
+void BSTree::list() {
+	root->list();
 }
